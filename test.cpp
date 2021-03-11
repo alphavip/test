@@ -12,13 +12,13 @@
 int32_t BinaryFind(const std::vector<uint32_t>& nums, uint32_t num)
 {
     if(nums.empty())
-        return -1;
+        return 0;
     uint32_t low = 0;
-    uint32_t high = nums.size();
+    uint32_t high = nums.size() - 1;
     while (low < high)
     {
-        uint32_t mid = low + (high - low) / 2;
-        nums[mid] < num ? high = mid : low = mid + 1; 
+        uint32_t mid = low + ((high - low) >> 1);
+        num < nums[mid]  ? high = mid : low = mid + 1; 
     }
     
     return --low;
@@ -87,23 +87,53 @@ void InsertSort(std::vector<uint32_t>& nums)
     }
 }
 
-uint32_t QuickSortPartition(std::vector<uint32_t>& nums, uint32_t lindex, uint32_t highIndex)
-{
-    
-}
+
 
 //快速排序
+void QuickSortImpl(std::vector<uint32_t>& nums, uint32_t start, uint32_t end)
+{
+    uint32_t i = start;
+    uint32_t j = end;
+    if (start < end)
+    {
+        uint32_t base = nums[i];    //设置基准数为i,即为startwhile (i < j)
+        while(i < j) 
+        {
+            for(;  i < j && nums[j] >= base; --j)     //找到比基准数小的数字
+            {}
+            nums[i] = nums[j];
+            for(; i < j && nums[i] <= base; ++i)     //找到比基准数小的数字
+            {}
+            nums[j] = nums[i];
+            nums[i]=base;                            //即将这个数设置为base
+            OutVec(nums)
+        }
+        QuickSortImpl(nums, start, i - 1);
+        QuickSortImpl(nums, j + 1, end);
+    }
+}
+
 void QuickSort(std::vector<uint32_t>& nums)
 {
-
+    if(nums.empty())
+        return;
+    QuickSortImpl(nums, 0, nums.size() - 1);
 }
 
 int main()
 {
     std::vector<uint32_t> nums = {44, 3, 43, 8, 6, 7, 5, 9, 10, 20};
-    InsertSort(nums);
+    QuickSort(nums);
 
-    
+    int32_t index = BinaryFind(nums, 20);
+    if(nums[index] == 20)
+    {
+        std::cout << "found 20 index:" << index << std::endl;
+    }
+    else
+    {
+        std::cout << "not found 20 index:" << index << std::endl;
+    }
 
     return 0;
 }
