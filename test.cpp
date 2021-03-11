@@ -108,10 +108,13 @@ void QuickSortImpl(std::vector<uint32_t>& nums, uint32_t start, uint32_t end)
             {}
             nums[j] = nums[i];
             nums[i]=base;                            //即将这个数设置为base
+            OutVec(nums)
         }
-        OutVec(nums)
+        
         std::cout << "基准数字:" << base << " end" << std::endl;
-        QuickSortImpl(nums, start, i - 1);
+        if(i > 1)
+            QuickSortImpl(nums, start, i - 1);
+
         QuickSortImpl(nums, j + 1, end);
     }
 }
@@ -125,7 +128,7 @@ void QuickSort(std::vector<uint32_t>& nums)
 
 int main()
 {
-    std::vector<uint32_t> nums = {1, 22, 44, 3, 43, 8, 6, 7, 5, 9, 10, 20, 1000, 2000, 109, 209, 208, 108};
+    std::vector<uint32_t> nums = {47, 38, 1, 22, 44, 3, 43, 8, 5000, 6, 7, 5, 9, 10, 20, 1000, 2000, 109, 209, 208, 108,10000};
     QuickSort(nums);
 
     int32_t index = BinaryFind(nums, 20);
