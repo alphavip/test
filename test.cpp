@@ -88,6 +88,35 @@ void InsertSort(std::vector<uint32_t>& nums)
 }
 
 
+void ShellSort(std::vector<uint32_t>& nums)
+{
+    size_t n = nums.size();
+    int i,j,k,group;
+    for (group = n/2; group > 0; group /= 2)//增量序列为n/2,n/4....直到1
+    {
+        for (i = 0; i < group; ++i)
+        {
+            for (j = i + group; j < n; j += group)
+            {
+                //对每个分组进行插入排序
+                if (nums[j-group] > nums[j])
+                {
+                    int temp = nums[j];
+                    k = j - group;
+                    while (k >= 0 && nums[k] > temp)
+                    {
+                        std::swap(nums[k+group], nums[k]);
+                        k -= group;
+                    }
+                    nums[k] = temp;
+                }
+                OutVec(nums)
+            }
+        }
+    }
+}
+
+
 
 //快速排序
 void QuickSortImpl(std::vector<uint32_t>& nums, uint32_t start, uint32_t end)
@@ -107,7 +136,7 @@ void QuickSortImpl(std::vector<uint32_t>& nums, uint32_t start, uint32_t end)
             for(; i < j && nums[i] <= base; ++i)     //找到比基准数小的数字
             {}
             nums[j] = nums[i];
-            nums[i]=base;                            //即将这个数设置为base
+            nums[i] = base;                            //即将这个数设置为base
             OutVec(nums)
         }
         
@@ -129,7 +158,7 @@ void QuickSort(std::vector<uint32_t>& nums)
 int main()
 {
     std::vector<uint32_t> nums = {47, 38, 1, 22, 44, 3, 43, 8, 5000, 6, 7, 5, 9, 10, 20, 1000, 2000, 109, 209, 208, 108,10000};
-    QuickSort(nums);
+    ShellSort(nums);
 
     int32_t index = BinaryFind(nums, 20);
     if(nums[index] == 20)
