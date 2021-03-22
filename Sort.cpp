@@ -33,7 +33,7 @@ void BubbleSort(std::vector<uint32_t>& nums)
     for(uint32_t i = 0; i < nums.size() - 1; ++i)
     {
         bool hasswap = false;
-        for(uint32_t j = 0; j < nums.size() - 1; ++j)
+        for(uint32_t j = 0; j < nums.size() - 1 - i; ++j)
         {
             if(nums[j] > nums[j+1])
             {
@@ -41,8 +41,8 @@ void BubbleSort(std::vector<uint32_t>& nums)
                 hasswap = true;
             }
         }
-
         OutVec(nums)
+
         //两两之间都是有序,那就是有序
         if(!hasswap)
             break;
@@ -157,8 +157,8 @@ void QuickSort(std::vector<uint32_t>& nums)
 
 int main()
 {
-    std::vector<uint32_t> nums = {47, 38, 1, 22, 44, 3, 43, 8, 5000, 6, 7, 5, 9, 10, 20, 1000, 2000, 109, 209, 208, 108,10000};
-    ShellSort(nums);
+    std::vector<uint32_t> nums = {1,2,3,4,6,7,8,9,10,5};
+    BubbleSort(nums);
 
     int32_t index = BinaryFind(nums, 20);
     if(nums[index] == 20)
